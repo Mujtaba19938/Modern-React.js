@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { ArrowLeft, Mail, Lock, User, Github, Twitter, Linkedin } from "lucide-react"
 import { ModernButton } from "@/components/ui/modern-button"
@@ -15,7 +16,22 @@ export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
+  const router = useRouter()
   const supabase = createClient()
+
+  // Check if user is already logged in
+  useEffect(() => {
+    const checkSession = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession()
+      if (session) {
+        router.push("/")
+      }
+    }
+
+    checkSession()
+  }, [router, supabase])
 
   // Handle form submission with server action
   async function handleRegister(formData: FormData) {
@@ -29,6 +45,13 @@ export default function RegisterPage() {
         setErrorMessage(result.error)
       } else if (result?.success) {
         setSuccessMessage(result.success)
+
+        // If redirect flag is true, redirect to home page after a short delay
+        if (result.redirect) {
+          setTimeout(() => {
+            router.push("/")
+          }, 1500)
+        }
       }
     } catch (error) {
       setErrorMessage("An unexpected error occurred. Please try again.")
@@ -47,7 +70,8 @@ export default function RegisterPage() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
+          // Supabase will use the current origin by default
+          redirectTo: `/auth/callback`,
         },
       })
 

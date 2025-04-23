@@ -90,19 +90,6 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Progress bar at the top of the page */}
-      <div className="fixed top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-500 z-[60]">
-        <div
-          className="h-full bg-white/20 backdrop-blur-sm"
-          style={{
-            width: `${Math.min(
-              (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100,
-              100,
-            )}%`,
-          }}
-        />
-      </div>
-
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-sm" : "bg-transparent"
@@ -238,7 +225,9 @@ export default function Navbar() {
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/profile">Profile</Link>
+                  </DropdownMenuItem>
                   <DropdownMenuItem>Settings</DropdownMenuItem>
                   <DropdownMenuItem>Billing</DropdownMenuItem>
                   <DropdownMenuSeparator />
