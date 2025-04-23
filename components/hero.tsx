@@ -18,10 +18,10 @@ export default function Hero() {
         background: "radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.1) 0%, rgba(0, 0, 0, 0) 70%)",
       }}
     >
-      <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-500 animate-fade-in-up">
+      <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-10 bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-500 animate-fade-in-up">
         Crafting Digital Experiences
       </h1>
-      <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mb-8 animate-fade-in-up animation-delay-200">
+      <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mb-12 animate-fade-in-up animation-delay-200">
         A modern, visually stunning website with smooth animations, interactive elements, and immersive 3D experiences.
       </p>
 
