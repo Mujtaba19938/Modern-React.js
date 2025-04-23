@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { ArrowLeft, Mail, Lock, Github, Twitter, Linkedin } from "lucide-react"
 import { ModernButton } from "@/components/ui/modern-button"
 import { Input } from "@/components/ui/input"
@@ -10,23 +11,48 @@ import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { login } from "@/lib/supabase/actions"
 import { createClient } from "@/lib/supabase/client"
-import { useRouter } from "next/navigation"
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const router = useRouter()
   const supabase = createClient()
+
+  // Check if user is already logged in
+  useEffect(() => {
+    const checkSession = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession()
+      if (session) {
+        router.push("/")
+      }
+    }
+
+    checkSession()
+  }, [router, supabase])
 
   // Handle form submission with server action
   async function handleLogin(formData: FormData) {
     setIsLoading(true)
     setErrorMessage(null)
+    setSuccessMessage(null)
 
     try {
       const result = await login(formData)
+
       if (result?.error) {
         setErrorMessage(result.error)
+      } else if (result?.success) {
+        setSuccessMessage(result.success)
+
+        // If redirect flag is true, redirect to home page
+        if (result.redirect) {
+          setTimeout(() => {
+            router.push("/")
+          }, 1000)
+        }
       }
     } catch (error) {
       setErrorMessage("An unexpected error occurred. Please try again.")
@@ -91,6 +117,12 @@ export default function LoginPage() {
           {errorMessage && (
             <div className="mb-6 p-3 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg text-sm">
               {errorMessage}
+            </div>
+          )}
+
+          {successMessage && (
+            <div className="mb-6 p-3 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-lg text-sm">
+              {successMessage}
             </div>
           )}
 

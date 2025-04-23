@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
 import { ModernButton } from "@/components/ui/modern-button"
 import Link from "next/link"
@@ -9,6 +10,7 @@ import { signOut } from "@/lib/supabase/actions"
 export function AuthButton() {
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
+  const router = useRouter()
   const supabase = createClient()
 
   useEffect(() => {
@@ -34,6 +36,20 @@ export function AuthButton() {
     getUser()
   }, [supabase])
 
+  async function handleSignOut() {
+    setLoading(true)
+    try {
+      const result = await signOut()
+      if (result?.redirect) {
+        router.push(result.redirect)
+      }
+    } catch (error) {
+      console.error("Sign out error:", error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   if (loading) {
     return (
       <ModernButton variant="ghost" size="sm" disabled>
@@ -44,11 +60,9 @@ export function AuthButton() {
 
   if (user) {
     return (
-      <form action={signOut}>
-        <ModernButton type="submit" variant="outline" size="sm">
-          SIGN OUT
-        </ModernButton>
-      </form>
+      <ModernButton type="button" variant="outline" size="sm" onClick={handleSignOut}>
+        SIGN OUT
+      </ModernButton>
     )
   }
 

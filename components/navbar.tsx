@@ -250,34 +250,26 @@ export default function Navbar() {
               size="icon"
               className="md:hidden rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
               onClick={toggleMenu}
+              aria-expanded={isMenuOpen}
             >
               <div className="relative w-6 h-6">
                 <span
                   className={`absolute block h-0.5 bg-current transform transition-all duration-300 ease-in-out ${
-                    isMenuOpen ? "w-0 opacity-0" : "w-6 opacity-100"
+                    isMenuOpen ? "rotate-45 top-3 w-6" : "w-6 top-2"
                   }`}
-                  style={{ top: "8px" }}
                 ></span>
                 <span
                   className={`absolute block w-6 h-0.5 bg-current transform transition-all duration-300 ease-in-out ${
-                    isMenuOpen ? "rotate-45" : "rotate-0"
+                    isMenuOpen ? "opacity-0" : "opacity-100 top-3"
                   }`}
-                  style={{ top: "12px" }}
-                ></span>
-                <span
-                  className={`absolute block w-6 h-0.5 bg-current transform transition-all duration-300 ease-in-out ${
-                    isMenuOpen ? "-rotate-45" : "rotate-0"
-                  }`}
-                  style={{ top: "12px" }}
                 ></span>
                 <span
                   className={`absolute block h-0.5 bg-current transform transition-all duration-300 ease-in-out ${
-                    isMenuOpen ? "w-0 opacity-0" : "w-6 opacity-100"
+                    isMenuOpen ? "-rotate-45 top-3 w-6" : "w-6 top-4"
                   }`}
-                  style={{ top: "16px" }}
                 ></span>
               </div>
-              <span className="sr-only">Toggle menu</span>
+              <span className="sr-only">{isMenuOpen ? "Close menu" : "Open menu"}</span>
             </ModernButton>
           </div>
         </div>
@@ -320,6 +312,19 @@ export default function Navbar() {
             isMenuOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full pointer-events-none"
           }`}
         >
+          {/* Close button at the top right */}
+          <div className="absolute top-4 right-4">
+            <ModernButton
+              variant="ghost"
+              size="icon"
+              onClick={toggleMenu}
+              className="rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+            >
+              <X className="h-6 w-6" />
+              <span className="sr-only">Close menu</span>
+            </ModernButton>
+          </div>
+
           <div className="flex flex-col h-full pt-20 pb-6 px-6">
             <div className="flex-1 flex flex-col">
               {["Home", "About", "Projects", "Contact", "Resources", "Blog"].map((item, index) => (
