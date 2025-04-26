@@ -50,14 +50,6 @@ export default function Preloader({ minimumLoadTimeMs = 1500, children }: Preloa
             }}
           >
             <div className="flex flex-col items-center">
-              {/* Logo */}
-              <div className="relative w-16 h-16 mb-8 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0 bg-white dark:bg-gray-900 rounded-lg m-0.5"></div>
-                <span className="relative text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-br from-emerald-500 to-teal-500">
-                  M
-                </span>
-              </div>
-
               {/* Loading spinner */}
               <div className="relative w-12 h-12">
                 <div className="absolute inset-0 rounded-full border-4 border-gray-200 dark:border-gray-800"></div>
