@@ -97,6 +97,14 @@
     animation: scaleUp 1.2s ease-out forwards;
   }
 
+  .animate-float-slow {
+    animation: floatSlow 8s ease-in-out infinite alternate;
+  }
+
+  .animate-float-slow-reverse {
+    animation: floatSlow 10s ease-in-out infinite alternate-reverse;
+  }
+
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -125,6 +133,18 @@
     to {
       opacity: 1;
       transform: scale(1);
+    }
+  }
+
+  @keyframes floatSlow {
+    0% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(4%, 2%) scale(1.05);
+    }
+    100% {
+      transform: translate(-2%, -3%) scale(0.95);
     }
   }
 }

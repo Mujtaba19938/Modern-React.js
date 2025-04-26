@@ -44,12 +44,28 @@ export default function Preloader({ minimumLoadTimeMs = 1500, children }: Preloa
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="fixed inset-0 z-[9999] flex flex-col items-center justify-center"
+            className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden"
             style={{
               backgroundColor: isDarkTheme ? "#111827" : "#ffffff",
             }}
           >
-            <div className="flex flex-col items-center">
+            {/* Animated background */}
+            <div className="absolute inset-0 overflow-hidden">
+              {/* Animated gradient orbs */}
+              <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-r from-emerald-500/10 to-teal-500/10 blur-3xl animate-float-slow"></div>
+              <div className="absolute bottom-1/4 right-1/4 w-1/3 h-1/3 rounded-full bg-gradient-to-r from-purple-500/10 to-pink-500/10 blur-3xl animate-float-slow-reverse"></div>
+
+              {/* Subtle grid pattern */}
+              <div
+                className="absolute inset-0 opacity-[0.015] dark:opacity-[0.03]"
+                style={{
+                  backgroundImage: `radial-gradient(circle at 1px 1px, ${isDarkTheme ? "white" : "black"} 1px, transparent 0)`,
+                  backgroundSize: "40px 40px",
+                }}
+              ></div>
+            </div>
+
+            <div className="flex flex-col items-center relative z-10">
               {/* Loading spinner */}
               <div className="relative w-12 h-12">
                 <div className="absolute inset-0 rounded-full border-4 border-gray-200 dark:border-gray-800"></div>
